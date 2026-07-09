@@ -1,0 +1,182 @@
+# =====================================
+# Dictionary + Set + Linked List
+# =====================================
+
+# ---------- TUGAS : DATABASE (DICTIONARY) ----------
+database = {}
+
+def menu_database():
+    while True:
+        print("\n=== DATABASE SEDERHANA ===")
+        print("1. Tambah Data")
+        print("2. Lihat Data")
+        print("3. Cari Data")
+        print("4. Hapus Data")
+        print("5. Kembali")
+
+        pilih = input("Pilih: ")
+
+        if pilih == "1":
+            id_data = input("Masukkan ID : ")
+            nama = input("Masukkan Nama : ")
+            database[id_data] = nama
+            print("Data berhasil ditambahkan.")
+
+        elif pilih == "2":
+            if database:
+                print("\nIsi Database:")
+                for id_data, nama in database.items():
+                    print(f"ID: {id_data} | Nama: {nama}")
+            else:
+                print("Database kosong.")
+
+        elif pilih == "3":
+            id_data = input("Masukkan ID: ")
+            if id_data in database:
+                print("Data:", database[id_data])
+            else:
+                print("Data tidak ditemukan.")
+
+        elif pilih == "4":
+            id_data = input("Masukkan ID yang dihapus: ")
+            if id_data in database:
+                del database[id_data]
+                print("Data berhasil dihapus.")
+            else:
+                print("Data tidak ditemukan.")
+
+        elif pilih == "5":
+            break
+
+        else:
+            print("Pilihan tidak valid!")
+
+
+# ---------- TUGAS 2 : FILTER SPAM (SET) ----------
+
+kata_spam = {"promo", "diskon", "hadiah", "gratis", "bonus"}
+
+def filter_spam():
+    email = input("\nMasukkan isi email:\n").lower()
+
+    kata_email = set(email.split())
+    hasil = kata_spam & kata_email
+
+    if hasil:
+        print("Email kemungkinan SPAM!")
+        print("Kata spam ditemukan:", hasil)
+    else:
+        print("Email aman.")
+
+
+# ---------- TUGAS 3 : PLAYLIST (LINKED LIST) ----------
+
+class Node:
+    def __init__(self, lagu):
+        self.lagu = lagu
+        self.next = None
+
+
+class Playlist:
+    def __init__(self):
+        self.head = None
+
+    def tambah(self, lagu):
+        baru = Node(lagu)
+
+        if self.head is None:
+            self.head = baru
+        else:
+            sekarang = self.head
+            while sekarang.next:
+                sekarang = sekarang.next
+            sekarang.next = baru
+
+    def hapus(self, lagu):
+        sekarang = self.head
+        sebelumnya = None
+
+        while sekarang:
+            if sekarang.lagu == lagu:
+                if sebelumnya is None:
+                    self.head = sekarang.next
+                else:
+                    sebelumnya.next = sekarang.next
+                print("Lagu berhasil dihapus.")
+                return
+
+            sebelumnya = sekarang
+            sekarang = sekarang.next
+
+        print("Lagu tidak ditemukan.")
+
+    def tampilkan(self):
+        if self.head is None:
+            print("Playlist kosong.")
+            return
+
+        print("\nDaftar Lagu:")
+        sekarang = self.head
+        while sekarang:
+            print("-", sekarang.lagu)
+            sekarang = sekarang.next
+
+
+playlist = Playlist()
+
+def menu_playlist():
+    while True:
+        print("\n=== PLAYLIST MUSIK ===")
+        print("1. Tambah Lagu")
+        print("2. Hapus Lagu")
+        print("3. Lihat Playlist")
+        print("4. Kembali")
+
+        pilih = input("Pilih: ")
+
+        if pilih == "1":
+            lagu = input("Nama Lagu: ")
+            playlist.tambah(lagu)
+
+        elif pilih == "2":
+            lagu = input("Nama Lagu yang dihapus: ")
+            playlist.hapus(lagu)
+
+        elif pilih == "3":
+            playlist.tampilkan()
+
+        elif pilih == "4":
+            break
+
+        else:
+            print("Pilihan tidak valid!")
+
+
+# ---------- MENU UTAMA ----------
+
+while True:
+    print("\n==============================")
+    print(" PROGRAM STRUKTUR DATA")
+    print("==============================")
+    print("1. Basis Data (Dictionary)")
+    print("2. Filter Email Spam (Set)")
+    print("3. Playlist Musik (Linked List)")
+    print("4. Keluar")
+
+    menu = input("Pilih menu: ")
+
+    if menu == "1":
+        menu_database()
+
+    elif menu == "2":
+        filter_spam()
+
+    elif menu == "3":
+        menu_playlist()
+
+    elif menu == "4":
+        print("Program selesai.")
+        break
+
+    else:
+        print("Pilihan tidak valid!")
